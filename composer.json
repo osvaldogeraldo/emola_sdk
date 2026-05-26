@@ -1,5 +1,5 @@
 {
-    "name": "brilliantmind/emola-sdk",
+    "name": "brilliant_mind/emola-sdk",
     "description": "online payment manager using emola gateway",
     "type": "library",
     "license": "GPL-3.0-or-later",
