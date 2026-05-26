@@ -1,21 +1,21 @@
 {
-    "name": "blutekic/emola-sdk",
+    "name": "brilliantmind/emola-sdk",
     "description": "online payment manager using emola gateway",
     "type": "library",
     "license": "GPL-3.0-or-later",
     "authors": [
         {
-            "name": "Rafael Munguambe",
-            "email": "rafael.munguambe@bluteki.com"
+            "name": "BrilliantMind",
+            "email": "info@brilliantmind.co.mz"
         }
     ], 
     "autoload": {
         "psr-4": {
-            "Bluteki\\Sdk\\": "src/"
+            "BrilliantMind\\Sdk\\": "src/"
         }
     },
     "require": {
         "php": ">=8.0",
-        "guzzlehttp/guzzle": "^7.0"
+        "ext-soap": "*"
     }
 }

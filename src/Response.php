@@ -1,6 +1,6 @@
 <?php
 
-namespace Bluteki\Sdk;
+namespace BrilliantMind\Sdk;
 
 class Response
 {

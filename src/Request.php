@@ -1,14 +1,9 @@
 <?php
 
-namespace Bluteki\Sdk;
+namespace BrilliantMind\Sdk;
 
-use Bluteki\Sdk\Contracts\EmolaContract;
+use BrilliantMind\Sdk\Contracts\EmolaContract;
 use Exception;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
-use \GuzzleHttp\Exception\RequestException;
-use \GuzzleHttp\Exception\ClientException;
-use Psr\Http\Message\StreamInterface;
 use SoapClient;
 
 class Request implements EmolaContract
@@ -35,9 +30,9 @@ class Request implements EmolaContract
     protected string $responseStatus;
 
     /**
-     * @var int $partnerCode
+     * @var string $partnerCode
      */
-    protected int $partnerCode;
+    protected string $partnerCode;
 
     /**
      * @var string $language
@@ -60,7 +55,7 @@ class Request implements EmolaContract
     protected string $password;
 
 
-    public function __construct($host, $username, $password, $key, $partnerCode, $language = 'pt')
+    public function __construct(string $host, string $username, string $password, string $key, string $partnerCode, string $language = 'pt')
     {
         $this->host = $host;
         $this->username = $username;
@@ -116,14 +111,14 @@ class Request implements EmolaContract
     }
 
     /**
-     * Initiates a business to business (b2c) transaction on the M-Pesa API.
+     * Initiates a business to customer (b2c) disbursement on the eMola API.
      *
      * @param float $amount
      * @param string $msisdn
-     * @param string $transactionReference
-     * @param $thirdPartyReference
+     * @param string $transactionID
+     * @param string $smsContent
      * @return Transaction
-     * @throws Exception|GuzzleException
+     * @throws Exception
      */
     public function b2c(float $amount, string $msisdn, string $transactionID, string $smsContent)
     {
@@ -156,12 +151,12 @@ class Request implements EmolaContract
     }
 
     /**
-     * Initiates a reversal transaction on the M-Pesa API.
+     * Query the status of a transaction on the eMola API.
      *
      * @param string $transactionID
      * @param string $transactionType
-     * @return Transaction
-     * @throws Exception|GuzzleException
+     * @return mixed
+     * @throws Exception
      */
     public function transaction(string $transactionID, string $transactionType)
     {
@@ -269,7 +264,7 @@ class Request implements EmolaContract
     }
 
     /**
-     * @param string $port
+     * @param string $wsdl
      * @return SoapClient
      */
     protected function productionRequest(string $wsdl): SoapClient

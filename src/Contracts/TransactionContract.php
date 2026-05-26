@@ -1,15 +1,15 @@
 <?php
 
-namespace Bluteki\Sdk\Contracts;
+namespace BrilliantMind\Sdk\Contracts;
 
 interface TransactionContract {
 
     /**
-     * Construct transaction from mpesa api.
+     * Construct transaction from the eMola API response.
      *
-     * @param array $response
+     * @param object|string $response
      */
-    public function __construct(array $response);
+    public function __construct($response);
 
     /**
      * Convert the model instance to an array

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bluteki\Sdk\Contracts;
+namespace BrilliantMind\Sdk\Contracts;
 
 interface EmolaStaticContract {
 

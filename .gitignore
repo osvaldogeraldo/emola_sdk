@@ -1,2 +1,5 @@
 vendor/*
 tests/*
+.env
+.env.*
+!.env.example

@@ -1,7 +1,7 @@
 <?php
 
-namespace Bluteki\Sdk;
-use Bluteki\Sdk\Contracts\TransactionContract;
+namespace BrilliantMind\Sdk;
+use BrilliantMind\Sdk\Contracts\TransactionContract;
 use Exception;
 
 
@@ -30,9 +30,9 @@ class Transaction implements TransactionContract
     protected $xml;
 
     /**
-     * Construct transaction from mpesa api.
+     * Construct transaction from the eMola API response.
      *
-     * @param object $response
+     * @param object|string $response
      */
     public function __construct($response)
     {

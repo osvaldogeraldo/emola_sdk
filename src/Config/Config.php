@@ -1,88 +1,47 @@
 <?php
 
-namespace Bluteki\Sdk\Config;
+namespace BrilliantMind\Sdk\Config;
 
 class Config {
 
     /**
-     * @var string $environment
+     * @var string $host eMola SOAP gateway WSDL endpoint.
      */
-    private static string $environment = 'development';
+    private static string $host;
 
     /**
-     * @var string $host
-     */
-    private static string $host = 'api.sandbox.vm.co.mz';
-
-    /**
-     * @var string $origin
-     */
-    private static string $origin = 'developer.mpesa.vm.co.mz';
-
-    /**
-     * @var string $api_key
-     */
-    private static string $api_key;
-
-    /**
-     * @var string $public_key
-     */
-    private static string $public_key;
-
-    /**
-     * @var string $port
-     */
-    private static string $port = '18352';
-
-    /**
-     * @var string $service_provider_code
-     */
-    private static string $service_provider_code = '171717';
-
-
-    /**
-     * @var string $initiatorIdentifier
-     */
-    private static string $initiatorIdentifier = 'MPesa2018';
-
-    /**
-     * @var string $securityCredential
-     */
-    private static string $securityCredential = 'Mpesa2019';
-
-    /**
-     * @var string $username
+     * @var string $username Encrypted username assigned by eMola.
      */
     private static string $username;
 
     /**
-     * @var string $password
+     * @var string $password Encrypted password assigned by eMola.
      */
     private static string $password;
 
     /**
-     * @var string $key
+     * @var string $key Private key provided by eMola.
      */
     private static string $key;
 
     /**
-     * @var int $partnerCode
+     * @var string $partnerCode Partner code provided by eMola (e.g. "00204").
      */
-    private static int $partnerCode;
+    private static string $partnerCode;
 
     /**
-     * @var string $language
+     * @var string $language Message language: pt (Portuguese) or en (English).
      */
-    private static string $language;
+    private static string $language = 'pt';
 
 
-    public static function config( 
-        string $host, 
+    public static function config(
+        string $host,
         string $username,
         string $password,
         string $key,
         string $partnerCode,
-        string $language
+        string $language = 'pt'
     ) {
         self::$host = $host;
         self::$username = $username;
@@ -95,15 +54,7 @@ class Config {
     /**
      * @return string
      */
-    public static function getEnvironment(): string 
-    {
-        return self::$environment;
-    }
-
-    /**
-     * @return string
-     */
-    public static function getHost(): string 
+    public static function getHost(): string
     {
         return self::$host;
     }
@@ -111,71 +62,39 @@ class Config {
     /**
      * @return string
      */
-    public static function getApiKey(): string 
-    {
-        return self::$api_key;
-    }
-
-    /**
-     * @return string
-     */
-    public static function getPublicKey(): string 
-    {
-        return self::$public_key;
-    }
-
-    /**
-     * @return string
-     */
-    public static function getPort(): string 
-    {
-        return self::$port;
-    }
-
-    /**
-     * @return string
-     */
-    public static function getServiceProviderCode(): string 
-    {
-        return self::$service_provider_code;
-    }
-
-    public static function getOrigin(): string
-    {
-        return self::$origin;
-    }
-
-    public static function getInitiatorIdentifier(): string
-    {
-        return self::$initiatorIdentifier;
-    }
-
-    public static function getSecurityCredentials(): string 
-    {
-        return self::$securityCredential;
-    }
-
-    public static function getUsername(): string 
+    public static function getUsername(): string
     {
         return self::$username;
     }
 
-    public static function getPassword(): string 
+    /**
+     * @return string
+     */
+    public static function getPassword(): string
     {
         return self::$password;
     }
 
-    public static function getKey(): string 
+    /**
+     * @return string
+     */
+    public static function getKey(): string
     {
         return self::$key;
     }
 
-    public static function getPartnerCode(): string 
+    /**
+     * @return string
+     */
+    public static function getPartnerCode(): string
     {
         return self::$partnerCode;
     }
 
-    public static function getLanguage(): string 
+    /**
+     * @return string
+     */
+    public static function getLanguage(): string
     {
         return self::$language;
     }

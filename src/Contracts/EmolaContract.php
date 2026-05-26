@@ -1,24 +1,24 @@
 <?php
 
-namespace Bluteki\Sdk\Contracts;
+namespace BrilliantMind\Sdk\Contracts;
 
 interface EmolaContract {
 
     /**
      * @param string $host
-     * @param string $origin
-     * @param string $token
-     * @param string $serviceProviderCode
-     * @param string $initiatorIdentifier
-     * @param string $securityCredential
+     * @param string $username
+     * @param string $password
+     * @param string $key
+     * @param string $partnerCode
+     * @param string $language
      */
     public function __construct(
         string $host,
-        string $origin,
-        string $token,
-        string $serviceProviderCode,
-        string $initiatorIdentifier,
-        string $securityCredential
+        string $username,
+        string $password,
+        string $key,
+        string $partnerCode,
+        string $language
     );
 
     public function c2b(

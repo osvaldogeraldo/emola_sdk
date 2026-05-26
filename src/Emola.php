@@ -1,10 +1,9 @@
 <?php
 
-namespace Bluteki\Sdk;
+namespace BrilliantMind\Sdk;
 
-use Bluteki\Sdk\Contracts\EmolaStaticContract;
-use Bluteki\Sdk\Config\Config;
-use Bluteki\MpesaGateway\Helpers\RSAToken;
+use BrilliantMind\Sdk\Contracts\EmolaStaticContract;
+use BrilliantMind\Sdk\Config\Config;
 
 class Emola extends Config implements EmolaStaticContract {
 
@@ -19,7 +18,7 @@ class Emola extends Config implements EmolaStaticContract {
     protected static string $status = "";
 
     /**
-     * @var int
+     * @var string
      */
     protected static string $responseCode = '0';
 
@@ -50,58 +49,68 @@ class Emola extends Config implements EmolaStaticContract {
         self::$responseCode = $code;
     }
  
-    public static function c2b( float $amount, string $msisdn, string $transactionID, string $transactionReference, string $smsContent ) {
-        return (new static())->mPesa()->c2b( $amount, $msisdn, $transactionID, $transactionReference, $smsContent );
-    }
-
     /**
-     * Initiates a business to business (b2c) transaction on the M-Pesa API.
+     * Initiates a customer to business (c2b) transaction on the eMola API.
      *
      * @param float $amount
      * @param string $msisdn
      * @param string $transactionID
-     * @param $smsContent
-     * @return mixed
+     * @param string $transactionReference
+     * @param string $smsContent
+     * @return Transaction
      */
-    public static function b2c(float $amount, string $msisdn, string $transactionID, $smsContent) {
-        return (new static())->mPesa()->b2c($amount, $msisdn, $transactionID, $smsContent);
+    public static function c2b( float $amount, string $msisdn, string $transactionID, string $transactionReference, string $smsContent ) {
+        return (new static())->client()->c2b( $amount, $msisdn, $transactionID, $transactionReference, $smsContent );
     }
 
     /**
-     * Get transaction in M-Pesa API.
+     * Initiates a business to customer (b2c) disbursement on the eMola API.
+     *
+     * @param float $amount
+     * @param string $msisdn
+     * @param string $transactionID
+     * @param string $smsContent
+     * @return Transaction
+     */
+    public static function b2c(float $amount, string $msisdn, string $transactionID, string $smsContent) {
+        return (new static())->client()->b2c($amount, $msisdn, $transactionID, $smsContent);
+    }
+
+    /**
+     * Query the status of a transaction on the eMola API.
      *
      * @param string $transactionID
      * @param string $transactionType
-     * @return Transaction
+     * @return mixed
      */
     public static function transaction( string $transactionID, string $transactionType) {
-        return (new static())->mPesa()->transaction($transactionID, $transactionType);
+        return (new static())->client()->transaction($transactionID, $transactionType);
     }
 
     /**
-     * Summary of beneficiary
+     * Query the beneficiary name on the eMola API.
+     *
      * @param string $msisdn
      * @param string $transactionID
      * @return mixed
      */
     public static function beneficiary( string $msisdn, string $transactionID) {
-        return (new static())->mPesa()->beneficiary($msisdn, $transactionID);
+        return (new static())->client()->beneficiary($msisdn, $transactionID);
     }
 
     /**
-     * Summary of beneficiary
-     * @param string $msisdn
+     * Query the partner account balance on the eMola API.
+     *
      * @param string $transactionID
      * @return mixed
      */
     public static function accountBalance( string $transactionID) {
-        return (new static())->mPesa()->accountBalance($transactionID );
+        return (new static())->client()->accountBalance($transactionID );
     }
 
- 
-    protected function mPesa()
+
+    protected function client(): Request
     {
-        // $token = RSAToken::make(self::getApiKey(), self::getPublicKey());
         $request = new Request(self::getHost(), self::getUsername(), self::getPassword(), self::getKey(), self::getPartnerCode(), self::getLanguage());
         return $request->setFake(self::$fake, self::$responseCode, self::$status);
     }
