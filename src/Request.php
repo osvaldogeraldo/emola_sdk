@@ -17,17 +17,17 @@ class Request implements EmolaContract
     /**
      * @var bool $fake
      */
-    protected bool $fake;
+    protected bool $fake = false;
 
     /**
      * @var int $code
      */
-    protected int $errorCode;
+    protected int $errorCode = 0;
 
     /**
      * @var string $status
      */
-    protected string $responseStatus;
+    protected string $responseStatus = '';
 
     /**
      * @var string $partnerCode
@@ -90,7 +90,7 @@ class Request implements EmolaContract
                     ['name' => 'partnerCode', 'value' => $this->partnerCode],
                     ['name' => 'msisdn', 'value' => $msisdn],
                     ['name' => 'smsContent', 'value' => $smsContent],
-                    ['name' => 'transAmount', 'value' => $amount],
+                    ['name' => 'transAmount', 'value' => self::formatAmount($amount)],
                     ['name' => 'transId', 'value' => $transactionID],
                     ['name' => 'language', 'value' => $this->language],
                     ['name' => 'refNo', 'value' => $transactionReference],
@@ -132,7 +132,7 @@ class Request implements EmolaContract
                     ['name' => 'partnerCode', 'value' => $this->partnerCode],
                     ['name' => 'msisdn', 'value' => $msisdn],
                     ['name' => 'smsContent', 'value' => $smsContent],
-                    ['name' => 'transAmount', 'value' => $amount],
+                    ['name' => 'transAmount', 'value' => self::formatAmount($amount)],
                     ['name' => 'transId', 'value' => $transactionID],
                     ['name' => 'key', 'value' => $this->key]
                 ],
@@ -254,6 +254,19 @@ class Request implements EmolaContract
 
 
     /**
+     * The amount as the gateway expects it: a string with exactly two decimals.
+     *
+     * A PHP float whose decimal part is zero is serialised by SOAP without
+     * decimals (`1500.0` goes out as `1500`), and the gateway rejects it with
+     * "Invalid amount". Amounts with cents (`19.99`) happened to work, so round
+     * amounts - the most common ones - always failed.
+     */
+    public static function formatAmount(float $amount): string
+    {
+        return number_format($amount, 2, '.', '');
+    }
+
+    /**
      * Summary of request
      * @param string $wsdl
      * @return \SoapClient
@@ -291,6 +304,7 @@ class Request implements EmolaContract
                 $this->fakeData = $fakeData;
             }
 
+            #[\ReturnTypeWillChange]
             public function __soapCall($function_name, $arguments, $options = null, $input_headers = null, &$output_headers = null)
             {
                 $requestId = random_int(100000000000000, 999999999999999);
